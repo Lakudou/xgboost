@@ -26,8 +26,9 @@ param = {'max_depth': 2, 'eta': 1, 'objective': 'binary:logistic'}
 
 # specify validations set to watch performance
 watchlist = [(dtest, 'eval'), (dtrain, 'train')]
-num_round = 2
+num_round = 10
 bst = xgb.train(param, dtrain, num_round, watchlist)
+#%%
 
 # this is prediction
 preds = bst.predict(dtest)
@@ -40,6 +41,7 @@ bst.save_model('0001.model')
 bst.dump_model('dump.raw.txt')
 # dump model with feature map
 bst.dump_model('dump.nice.txt', os.path.join(DEMO_DIR, 'data/featmap.txt'))
+#%%
 
 # save dmatrix into binary buffer
 dtest.save_binary('dtest.buffer')
@@ -96,3 +98,5 @@ npymat = csr.todense()
 dtrain = xgb.DMatrix(npymat, label=labels)
 watchlist = [(dtest, 'eval'), (dtrain, 'train')]
 bst = xgb.train(param, dtrain, num_round, watchlist)
+
+# %%
